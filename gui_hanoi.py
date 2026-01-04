@@ -58,7 +58,7 @@ def init_position(cnv: tk.Canvas, n_d: int):
         cnv -- Canvas de destination du tracé
         n_d -- nb de disques choisi
     """
-    for i in range(10):
+    for i in range(11):
         objs = cnv.find_withtag("d"+str(i))
         for obj in objs:
             cnv.delete(obj)
@@ -73,6 +73,7 @@ def init_position(cnv: tk.Canvas, n_d: int):
             larg = disques[mat][haut]
             trace_rect(cnv, mat, haut, larg)
     step.set("0")
+    n_choix.set(n)
     entry_step.update()
     lbl_totalstep["text"] = f'/ {str(2**n_d-1)}'
 
@@ -205,6 +206,7 @@ root.geometry(str(l)+"x"+str(h))
 root.resizable(width=False, height=False)
 root.update()
 root.title('Une fenêtre vers Hanoi')
+
 ## Widgets
 cnv = tk.Canvas(root)
 front_btn = tk.Button(root)
@@ -222,7 +224,8 @@ back_btn['text'] =  '  ◀  '
 start_btn['text'] = ' ┃◀◀ '
 end_btn['text'] =   ' ▶▶┃ '
 lbl_n = tk.Label(root, text='nb de\ndisques')
-choice_n = tk.Spinbox(root, from_=1, to=9, font='DejaVu 15', width=1)
+n_choix = tk.DoubleVar(value = 1)
+choice_n = tk.Spinbox(root, from_=1, to=9, font='DejaVu 15', width=1, textvariable=n_choix)
 
 cnv["height"]=int(root.geometry()[root.geometry().index('x')+1: root.geometry().index('+')])-40
 cnv["width"]=int(root.geometry()[:root.geometry().index('x')])
@@ -233,7 +236,7 @@ cnv.update()
 
 # Configuration des commandes
 choice_n["command"] = lambda : init_position(cnv, int(choice_n.get()))
-choice_n.bind("<Return>", lambda _: init_position(cnv, int(choice_n.get())))
+choice_n.bind("<Return>", lambda _: init_position(cnv, min(10,int(choice_n.get()))))
 back_btn.bind("<Button-1>", lambda _ : update_disques_bwd(cnv, etapes_disques))
 front_btn.bind("<Button-1>", lambda _ : update_disques_fd(cnv, etapes_disques))
 start_btn.bind("<Button-1>", lambda _ : transition_disques(cnv, etapes_disques, state, 0))
