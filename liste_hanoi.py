@@ -1,4 +1,4 @@
-def init_hanoi(n):
+def init_hanoi(n:int)->tuple:
     return ([i for i in range(n, 0, -1)],[],[])
 
 def construit_deplacement(n:int, first:bool =True, lst= None, start:int = 0, end:int = 2):

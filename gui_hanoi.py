@@ -178,8 +178,6 @@ def update_disques_bwd(cnv: tk.Canvas, etapes_disques: tuple):
     th = Thread(name= "b"+str(state+1), target=update_disques_bckwd, args=[cnv, etapes_disques])
     th.start()
 
-
-
 def transition_disques(cnv: tk.Canvas, etapes_disques: tuple, start: int, end: int):
     """permet la transition de l'étape start à l'étape end
 
@@ -217,6 +215,8 @@ step = tk.StringVar()
 entry_step = tk.Entry(root, text= step, font='DejaVu 15', width=3, justify="center")
 totalstep = f'/ {str(2**n-1)}'
 lbl_totalstep = tk.Label(text=totalstep, font='DejaVu 15')
+n_choix = tk.DoubleVar(value = 1)
+choice_n = tk.Spinbox(root, from_=1, to=9, font='DejaVu 15', width=1, textvariable=n_choix)
 
 # Configuration des widgets
 front_btn['text'] = '  ▶  '
@@ -224,8 +224,6 @@ back_btn['text'] =  '  ◀  '
 start_btn['text'] = ' ┃◀◀ '
 end_btn['text'] =   ' ▶▶┃ '
 lbl_n = tk.Label(root, text='nb de\ndisques')
-n_choix = tk.DoubleVar(value = 1)
-choice_n = tk.Spinbox(root, from_=1, to=9, font='DejaVu 15', width=1, textvariable=n_choix)
 
 cnv["height"]=int(root.geometry()[root.geometry().index('x')+1: root.geometry().index('+')])-40
 cnv["width"]=int(root.geometry()[:root.geometry().index('x')])
